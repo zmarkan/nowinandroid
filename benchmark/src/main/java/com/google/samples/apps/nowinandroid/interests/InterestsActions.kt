@@ -19,6 +19,7 @@ package com.google.samples.apps.nowinandroid.interests
 import androidx.benchmark.macro.MacrobenchmarkScope
 import androidx.test.uiautomator.By
 import androidx.test.uiautomator.Direction
+import com.google.samples.apps.nowinandroid.scrollDownUp
 
 fun MacrobenchmarkScope.interestsScrollTopicsDownUp() {
     val topicsList = device.findObject(By.res("interests:topics"))
@@ -27,9 +28,5 @@ fun MacrobenchmarkScope.interestsScrollTopicsDownUp() {
     topicsList.fling(Direction.UP)
 }
 
-fun MacrobenchmarkScope.interestsScrollPeopleDownUp() {
-    val peopleList = device.findObject(By.res("interests:people"))
-    peopleList.fling(Direction.DOWN)
-    device.waitForIdle()
-    peopleList.fling(Direction.UP)
-}
+fun MacrobenchmarkScope.interestsScrollPeopleDownUp() =
+    scrollDownUp(device, "interests:people")

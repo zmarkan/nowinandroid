@@ -16,6 +16,10 @@
 
 package com.google.samples.apps.nowinandroid
 
+import androidx.benchmark.macro.MacrobenchmarkScope
+import androidx.test.uiautomator.By
+import androidx.test.uiautomator.Direction
+import androidx.test.uiautomator.UiDevice
 import com.google.samples.apps.nowinandroid.benchmark.BuildConfig
 
 /**
@@ -23,3 +27,13 @@ import com.google.samples.apps.nowinandroid.benchmark.BuildConfig
  */
 const val PACKAGE_NAME =
     "com.google.samples.apps.nowinandroid.${BuildConfig.FLAVOR}.${BuildConfig.BUILD_TYPE}"
+
+/**
+ * Finds an object by a given resourceName such as a test tag, then scrolls it down and up again.
+ */
+fun MacrobenchmarkScope.scrollDownUp(device: UiDevice, resourceName: String) {
+    val feedList = device.findObject(By.res(resourceName))
+    feedList.fling(Direction.DOWN)
+    device.waitForIdle()
+    feedList.fling(Direction.UP)
+}
