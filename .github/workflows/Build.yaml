@@ -95,4 +95,6 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: test-reports
-          path: '*/build/reports/androidTests'
+          path: '**/build/reports/androidTests'
+
+      - name: Run instrumentation tests
