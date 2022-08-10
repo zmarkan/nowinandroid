@@ -99,9 +99,12 @@ dependencies {
     implementation(project(":feature:bookmarks"))
     implementation(project(":feature:topic"))
 
+    implementation(project(":core:common"))
     implementation(project(":core:ui"))
     implementation(project(":core:designsystem"))
     implementation(project(":core:navigation"))
+    implementation(project(":core:data"))
+    implementation(project(":core:model"))
 
     implementation(project(":sync"))
 
@@ -112,6 +115,7 @@ dependencies {
     androidTestImplementation(libs.androidx.navigation.testing)
     debugImplementation(libs.androidx.compose.ui.testManifest)
 
+    implementation(libs.accompanist.systemuicontroller)
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.appcompat)
     implementation(libs.androidx.core.ktx)

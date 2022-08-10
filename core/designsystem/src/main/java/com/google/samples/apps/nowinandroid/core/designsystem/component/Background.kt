@@ -137,7 +137,7 @@ fun NiaGradientBackground(
 @Preview(uiMode = Configuration.UI_MODE_NIGHT_YES, name = "Dark theme")
 @Composable
 fun BackgroundDefault() {
-    NiaTheme {
+    NiaTheme(disableDynamicTheming = true) {
         NiaBackground(Modifier.size(100.dp), content = {})
     }
 }
@@ -146,7 +146,7 @@ fun BackgroundDefault() {
 @Preview(uiMode = Configuration.UI_MODE_NIGHT_YES, name = "Dark theme")
 @Composable
 fun BackgroundDynamic() {
-    NiaTheme(dynamicColor = true) {
+    NiaTheme {
         NiaBackground(Modifier.size(100.dp), content = {})
     }
 }
@@ -164,7 +164,7 @@ fun BackgroundAndroid() {
 @Preview(uiMode = Configuration.UI_MODE_NIGHT_YES, name = "Dark theme")
 @Composable
 fun GradientBackgroundDefault() {
-    NiaTheme {
+    NiaTheme(disableDynamicTheming = true) {
         NiaGradientBackground(Modifier.size(100.dp), content = {})
     }
 }
@@ -173,7 +173,7 @@ fun GradientBackgroundDefault() {
 @Preview(uiMode = Configuration.UI_MODE_NIGHT_YES, name = "Dark theme")
 @Composable
 fun GradientBackgroundDynamic() {
-    NiaTheme(dynamicColor = true) {
+    NiaTheme {
         NiaGradientBackground(Modifier.size(100.dp), content = {})
     }
 }

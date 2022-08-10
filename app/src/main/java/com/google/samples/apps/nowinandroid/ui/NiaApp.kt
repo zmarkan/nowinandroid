@@ -51,7 +51,6 @@ import com.google.samples.apps.nowinandroid.core.designsystem.component.NiaNavig
 import com.google.samples.apps.nowinandroid.core.designsystem.component.NiaNavigationRailItem
 import com.google.samples.apps.nowinandroid.core.designsystem.icon.Icon.DrawableResourceIcon
 import com.google.samples.apps.nowinandroid.core.designsystem.icon.Icon.ImageVectorIcon
-import com.google.samples.apps.nowinandroid.core.designsystem.theme.NiaTheme
 import com.google.samples.apps.nowinandroid.navigation.NiaNavHost
 import com.google.samples.apps.nowinandroid.navigation.TopLevelDestination
 
@@ -65,51 +64,49 @@ fun NiaApp(
     windowSizeClass: WindowSizeClass,
     appState: NiaAppState = rememberNiaAppState(windowSizeClass)
 ) {
-    NiaTheme {
-        NiaBackground {
-            Scaffold(
-                modifier = Modifier.semantics {
-                    testTagsAsResourceId = true
-                },
-                containerColor = Color.Transparent,
-                contentColor = MaterialTheme.colorScheme.onBackground,
-                bottomBar = {
-                    if (appState.shouldShowBottomBar) {
-                        NiaBottomBar(
-                            destinations = appState.topLevelDestinations,
-                            onNavigateToDestination = appState::navigate,
-                            currentDestination = appState.currentDestination
-                        )
-                    }
-                }
-            ) { padding ->
-                Row(
-                    Modifier
-                        .fillMaxSize()
-                        .windowInsetsPadding(
-                            WindowInsets.safeDrawing.only(
-                                WindowInsetsSides.Horizontal
-                            )
-                        )
-                ) {
-                    if (appState.shouldShowNavRail) {
-                        NiaNavRail(
-                            destinations = appState.topLevelDestinations,
-                            onNavigateToDestination = appState::navigate,
-                            currentDestination = appState.currentDestination,
-                            modifier = Modifier.safeDrawingPadding()
-                        )
-                    }
-
-                    NiaNavHost(
-                        navController = appState.navController,
-                        onBackClick = appState::onBackClick,
+    NiaBackground {
+        Scaffold(
+            modifier = Modifier.semantics {
+                testTagsAsResourceId = true
+            },
+            containerColor = Color.Transparent,
+            contentColor = MaterialTheme.colorScheme.onBackground,
+            bottomBar = {
+                if (appState.shouldShowBottomBar) {
+                    NiaBottomBar(
+                        destinations = appState.topLevelDestinations,
                         onNavigateToDestination = appState::navigate,
-                        modifier = Modifier
-                            .padding(padding)
-                            .consumedWindowInsets(padding)
+                        currentDestination = appState.currentDestination
                     )
                 }
+            }
+        ) { padding ->
+            Row(
+                Modifier
+                    .fillMaxSize()
+                    .windowInsetsPadding(
+                        WindowInsets.safeDrawing.only(
+                            WindowInsetsSides.Horizontal
+                        )
+                    )
+            ) {
+                if (appState.shouldShowNavRail) {
+                    NiaNavRail(
+                        destinations = appState.topLevelDestinations,
+                        onNavigateToDestination = appState::navigate,
+                        currentDestination = appState.currentDestination,
+                        modifier = Modifier.safeDrawingPadding()
+                    )
+                }
+
+                NiaNavHost(
+                    navController = appState.navController,
+                    onBackClick = appState::onBackClick,
+                    onNavigateToDestination = appState::navigate,
+                    modifier = Modifier
+                        .padding(padding)
+                        .consumedWindowInsets(padding)
+                )
             }
         }
     }
