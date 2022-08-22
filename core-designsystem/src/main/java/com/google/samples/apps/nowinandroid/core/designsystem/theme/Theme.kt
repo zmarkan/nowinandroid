@@ -16,7 +16,9 @@
 
 package com.google.samples.apps.nowinandroid.core.designsystem.theme
 
+import android.content.Context
 import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.annotation.VisibleForTesting
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
@@ -161,6 +163,54 @@ val LightDefaultGradientColors = GradientColors(
 )
 
 /**
+ * Light dynamic gradient colors
+ */
+@RequiresApi(Build.VERSION_CODES.S)
+fun lightDynamicIconTintColors(context: Context) = IconTintColors(
+    primary = Color(context.resources.getColor(android.R.color.system_accent1_200, context.theme)),
+    secondary = Color(
+        context.resources.getColor(
+            android.R.color.system_accent2_200,
+            context.theme
+        )
+    ),
+    tertiary = Color(context.resources.getColor(android.R.color.system_accent3_200, context.theme))
+)
+
+/**
+ * Dark dynamic gradient colors
+ */
+@RequiresApi(Build.VERSION_CODES.S)
+fun darkDynamicIconTintColors(context: Context) = IconTintColors(
+    primary = Color(context.resources.getColor(android.R.color.system_accent1_600, context.theme)),
+    secondary = Color(
+        context.resources.getColor(
+            android.R.color.system_accent2_600,
+            context.theme
+        )
+    ),
+    tertiary = Color(context.resources.getColor(android.R.color.system_accent3_600, context.theme))
+)
+
+val LightDefaultIconTintColors = IconTintColors(
+    primary = Purple80,
+    secondary = Orange80,
+    tertiary = Blue80
+)
+
+val DarkDefaultIconTintColors = IconTintColors(
+    primary = Purple40,
+    secondary = Orange40,
+    tertiary = Blue40
+)
+
+val AndroidIconTintColors = IconTintColors(
+    primary = Green80,
+    secondary = Orange80,
+    tertiary = Blue80
+)
+
+/**
  * Light Android background theme
  */
 val LightAndroidBackgroundTheme = BackgroundTheme(color = DarkGreenGray95)
@@ -184,7 +234,7 @@ val DarkAndroidBackgroundTheme = BackgroundTheme(color = Color.Black)
 @Composable
 fun NiaTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
-    dynamicColor: Boolean = false,
+    dynamicColor: Boolean = true,
     androidTheme: Boolean = false,
     content: @Composable() () -> Unit
 ) {
@@ -201,6 +251,15 @@ fun NiaTheme(
         else -> if (darkTheme) DarkDefaultColorScheme else LightDefaultColorScheme
     }
 
+    val iconTintColors = when {
+        dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
+            val context = LocalContext.current
+            if (darkTheme) darkDynamicIconTintColors(context)
+            else lightDynamicIconTintColors(context)
+        }
+        androidTheme -> AndroidIconTintColors
+        else -> if (darkTheme) DarkDefaultIconTintColors else LightDefaultIconTintColors
+    }
     val defaultGradientColors = GradientColors()
     val gradientColors = when {
         dynamicColor -> {
@@ -225,6 +284,7 @@ fun NiaTheme(
     }
 
     CompositionLocalProvider(
+        LocalIconTintColors provides iconTintColors,
         LocalGradientColors provides gradientColors,
         LocalBackgroundTheme provides backgroundTheme
     ) {

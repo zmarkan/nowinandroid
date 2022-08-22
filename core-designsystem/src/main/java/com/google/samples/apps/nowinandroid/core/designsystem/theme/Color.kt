@@ -84,3 +84,6 @@ internal val Teal30 = Color(0xFF214D56)
 internal val Teal40 = Color(0xFF3A656F)
 internal val Teal80 = Color(0xFFA2CED9)
 internal val Teal90 = Color(0xFFBEEAF6)
+
+internal val AndroidOrange = Color(0xFFFF8B5E)
+internal val AndroidBlue = Color(0xFF1769E0)
